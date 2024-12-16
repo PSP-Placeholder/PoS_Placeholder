@@ -19,15 +19,13 @@ public class BusinessController : ControllerBase
 {
     private readonly BusinessRepository _businessRepository;
     private readonly UserRepository _userRepository;
-    private readonly UserWorkTimeRepository _userWorkTimeRepository;
     private readonly UserManager<User> _userManager;
 
-    public BusinessController(BusinessRepository businessRepository, UserManager<User> userManager, UserRepository userRepository, UserWorkTimeRepository userWorkTimeRepository)
+    public BusinessController(BusinessRepository businessRepository, UserManager<User> userManager, UserRepository userRepository)
     {
         _businessRepository = businessRepository;
         _userManager = userManager;
         _userRepository = userRepository;
-        _userWorkTimeRepository = userWorkTimeRepository;
     }
 
     [HttpPost]
