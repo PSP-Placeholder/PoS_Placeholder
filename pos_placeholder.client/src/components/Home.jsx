@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 import * as productApi from "@/api/productApi.jsx";
 import * as orderApi from "@/api/orderApi.jsx";
 import * as paymentApi from "@/api/paymentApi.jsx";
+import * as discountApi from "@/api/discountApi.jsx";
 import {getCurrency} from "@/helpers/currencyUtils.jsx";
 import Payment from "@/components/payment/payment.jsx";
-import * as discountApi from "@/api/discountApi.jsx";
 import Giftcard from "@/components/shared/Giftcard.jsx";
 
 const Home = () => {
@@ -247,6 +247,7 @@ const Home = () => {
                 <h5>{selectedProduct?.name}</h5>
                 {variations.map((variation) => (
                     <div key={variation.id} className="p-2 border rounded mb-2"
+                         style={{cursor: "pointer"}}
                          onClick={() => handleAddToCart(variation, selectedProduct)}>
                         <h6>{variation.name}</h6>
                         <p>Price: {variation.price} {getCurrency()}</p>
