@@ -9,8 +9,10 @@ const ProductVariationForm = ({variation = null, onSubmit, onCancel}) => {
 
     const handleSubmit = () => {
         const formData = new FormData();
-        formData.append("id", variation.id);
-        formData.append("productId", variation.productId);
+        if (variation) {
+            formData.append("id", variation.id);
+            formData.append("productId", variation.productId);
+        }
         formData.append("name", name);
         formData.append("price", price);
         if (image) formData.append("pictureFile", image);

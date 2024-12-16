@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PoS_Placeholder.Server.Models;
 
@@ -23,5 +24,6 @@ public class Product
     public Business Business { get; set; }
     
     // Navigation properties
+    [JsonIgnore]
     public ICollection<ProductVariation> ProductVariations { get; set; }
 }

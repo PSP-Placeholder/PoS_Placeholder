@@ -43,7 +43,7 @@ builder.Services.AddScoped<DiscountRepository>();
 builder.Services.AddScoped<BusinessRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserWorkTimeRepository>();
-
+builder.Services.AddScoped<GiftcardRepository>();
 
 builder.Logging.AddLogger(configuration =>
 {

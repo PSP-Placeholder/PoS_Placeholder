@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PoS_Placeholder.Server.Data;
 
@@ -11,9 +12,11 @@ using PoS_Placeholder.Server.Data;
 namespace PoS_Placeholder.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241214112604_DiscountArchive")]
+    partial class DiscountArchive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,24 +265,6 @@ namespace PoS_Placeholder.Server.Migrations
                     b.ToTable("DiscountsArchives");
                 });
 
-            modelBuilder.Entity("PoS_Placeholder.Server.Models.Giftcard", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("BusinessId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessId");
-
-                    b.ToTable("Giftcards");
-                });
-
             modelBuilder.Entity("PoS_Placeholder.Server.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -311,36 +296,6 @@ namespace PoS_Placeholder.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("PoS_Placeholder.Server.Models.PaymentArchive", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("GiftCardId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Method")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PaidPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("PaymentIntentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("PaymentsArchive");
                 });
 
             modelBuilder.Entity("PoS_Placeholder.Server.Models.Product", b =>
@@ -547,40 +502,6 @@ namespace PoS_Placeholder.Server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("PoS_Placeholder.Server.Models.UserWorkTime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeSpan?>("BreakEnd")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan?>("BreakStart")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime>("Day")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserWorkTimes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -646,23 +567,12 @@ namespace PoS_Placeholder.Server.Migrations
             modelBuilder.Entity("PoS_Placeholder.Server.Models.DiscountArchive", b =>
                 {
                     b.HasOne("PoS_Placeholder.Server.Models.Order", "Order")
-                        .WithMany("Discounts")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("PoS_Placeholder.Server.Models.Giftcard", b =>
-                {
-                    b.HasOne("PoS_Placeholder.Server.Models.Business", "Business")
-                        .WithMany("Giftcards")
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Business");
                 });
 
             modelBuilder.Entity("PoS_Placeholder.Server.Models.Order", b =>
@@ -682,17 +592,6 @@ namespace PoS_Placeholder.Server.Migrations
                     b.Navigation("Business");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PoS_Placeholder.Server.Models.PaymentArchive", b =>
-                {
-                    b.HasOne("PoS_Placeholder.Server.Models.Order", "Order")
-                        .WithMany("Payments")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("PoS_Placeholder.Server.Models.Product", b =>
@@ -757,21 +656,8 @@ namespace PoS_Placeholder.Server.Migrations
                     b.Navigation("Business");
                 });
 
-            modelBuilder.Entity("PoS_Placeholder.Server.Models.UserWorkTime", b =>
-                {
-                    b.HasOne("PoS_Placeholder.Server.Models.User", "User")
-                        .WithMany("UserWorkTimes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PoS_Placeholder.Server.Models.Business", b =>
                 {
-                    b.Navigation("Giftcards");
-
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
@@ -781,10 +667,6 @@ namespace PoS_Placeholder.Server.Migrations
 
             modelBuilder.Entity("PoS_Placeholder.Server.Models.Order", b =>
                 {
-                    b.Navigation("Discounts");
-
-                    b.Navigation("Payments");
-
                     b.Navigation("Products");
 
                     b.Navigation("Taxes");
@@ -798,8 +680,6 @@ namespace PoS_Placeholder.Server.Migrations
             modelBuilder.Entity("PoS_Placeholder.Server.Models.User", b =>
                 {
                     b.Navigation("Orders");
-
-                    b.Navigation("UserWorkTimes");
                 });
 #pragma warning restore 612, 618
         }

@@ -145,7 +145,7 @@ public class ProductVariationController : ControllerBase
             }
 
             var product = await _productRepository.GetByIdAsync(updateProductVariationDto.ProductId);
-            if (productVariation == null)
+            if (product == null)
             {
                 return NotFound("Product not found.");
             }

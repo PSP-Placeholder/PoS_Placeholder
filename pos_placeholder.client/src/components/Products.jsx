@@ -106,6 +106,7 @@ const Products = () => {
 
 
     const handleAddVariation = async (productId, formData) => {
+        formData.append("productId", productId);
         const createdVariation = await ProductApi.addProductVariation(formData);
         setVariations([...variations, createdVariation]);
         setIsAddVariationFormOpen(false);

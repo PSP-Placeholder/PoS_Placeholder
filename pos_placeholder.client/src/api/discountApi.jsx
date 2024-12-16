@@ -8,6 +8,14 @@ export const getDiscounts = async () => {
     }
 };
 
+export const getDiscount = async (id) => {
+    try {
+        return await apiService.get(`/api/discounts/${id}`);
+    } catch (e) {
+        console.error("Error fetching discount:", e);
+    }
+};
+
 export const getVariationsByDiscountId = async (id) => {
     try {
         return await apiService.get(`/api/discounts/productVariations/${id}`);

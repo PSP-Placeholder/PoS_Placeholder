@@ -46,6 +46,24 @@ public class DiscountController : ControllerBase
         return Ok(businessDiscounts);
     }
     
+    [HttpGet("{id:int}")]
+    [Authorize]
+    public async Task<IActionResult> GetDiscount(int id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized("User not found.");
+        }
+
+        var variationDiscount = await _discountRepository.GetByIdAsync(id);
+
+        if (variationDiscount?.EndDate <= DateTime.Now || variationDiscount == null)
+            return NotFound("Discount not valid");
+        
+        return Ok(variationDiscount);
+    }
+    
     [HttpGet("productVariations/{id:int}")]
     [Authorize]
     public async Task<IActionResult> GetAllProductVariationsByDiscountId(int id)

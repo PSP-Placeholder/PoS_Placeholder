@@ -12,7 +12,7 @@ export const createOrder = async (products) => {
     try {
         return await apiService.post("/api/orders", products);
     } catch (e) {
-        console.log("Error creating order:", e);
+        throw e;
     }
 }
 

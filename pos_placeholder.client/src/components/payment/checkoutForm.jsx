@@ -30,7 +30,9 @@ const CheckoutForm = ({paymentData, order, tip, onPaymentSuccess}) => {
                     ProductVariationId: item.productVariationId,
                     Quantity: item.quantity
                 })),
-                PaymentIntentId: paymentData.paymentIntentId
+                PaymentIntentId: paymentData.paymentIntentId,
+                GiftCardId: null,
+                Method: 0 // 0 -> "card", 1 -> "giftcard", 2 -> "cash"
             };
             const createdOrder = await orderApi.createOrder(createOrderDto);
             console.log(createdOrder);

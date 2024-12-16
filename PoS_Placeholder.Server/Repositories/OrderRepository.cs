@@ -15,6 +15,7 @@ public class OrderRepository : Repository<Order>
         return await _db.Orders
             .Include(o => o.Products)
             .Include(o => o.Taxes)
+            .Include(o => o.Discounts)
             .Where(o => o.BusinessId == businessId)
             .ToListAsync();
     }
@@ -24,6 +25,7 @@ public class OrderRepository : Repository<Order>
         return await _db.Orders
             .Include(o => o.Products)
             .Include(o => o.Taxes)
+            .Include(o => o.Discounts)
             .FirstOrDefaultAsync(o => o.Id == orderId && o.BusinessId == businessId);
     }
 }
