@@ -17,5 +17,9 @@ namespace PoS_Placeholder.Server.Repositories
         {
             return await _db.Users.Where(u => u.BusinessId == businessId).ToListAsync();
         }
+        public async Task<User> GetUserByIdAsync(string userId)
+        {
+            return await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        }
     }
 }

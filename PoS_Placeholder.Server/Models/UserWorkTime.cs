@@ -19,8 +19,9 @@ namespace PoS_Placeholder.Server.Models
         public TimeOnly EndTime { get; set; }
 
         [ForeignKey("User")]
-        public string UserId { get; set; }  
+        public string UserId { get; set; }
 
+        public User user { get; set; }
         public TimeOnly? BreakStart { get; set; }
 
         public TimeOnly? BreakEnd { get; set; }
