@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PoS_Placeholder.Server.Data;
 using PoS_Placeholder.Server.Models;
 using PoS_Placeholder.Server.Models.Dto;
+using PoS_Placeholder.Server.Models.DTOs;
 using PoS_Placeholder.Server.Models.Enum;
 using PoS_Placeholder.Server.Repositories;
 using Stripe;
@@ -59,7 +60,19 @@ public class BusinessController : ControllerBase
             _businessRepository.Add(business);
             await _businessRepository.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(CreateBusiness), new { id = business.Id }, business);
+            var businessDto = new BusinessDto
+            {
+                Id = business.Id,
+                Name = business.Name,
+                Phone = business.Phone,
+                Email = business.Email,
+                Street = business.Street,
+                City = business.City,
+                Region = business.Region,
+                Country = business.Country
+            };
+
+            return CreatedAtAction(nameof(CreateBusiness), new { id = business.Id }, businessDto);
         }
         catch (Exception)
         {
@@ -94,7 +107,19 @@ public class BusinessController : ControllerBase
         {
             _businessRepository.Update(business);
             await _businessRepository.SaveChangesAsync();
-            return Ok(business);
+            var businessDto = new BusinessDto
+            {
+                Id = business.Id,
+                Name = business.Name,
+                Phone = business.Phone,
+                Email = business.Email,
+                Street = business.Street,
+                City = business.City,
+                Region = business.Region,
+                Country = business.Country
+            };
+
+            return Ok(businessDto);
         }
         catch (Exception)
         {
@@ -120,7 +145,16 @@ public class BusinessController : ControllerBase
             return NotFound("No employees found for this business.");
         }
 
-        return Ok(employees); // 200 OK
+        var employeeDtos = employees.Select(e => new UserDto
+        {
+            Id = e.Id,
+            FirstName = e.FirstName,
+            LastName = e.LastName,
+            AvailabilityStatus = e.AvailabilityStatus,
+            BusinessId = e.BusinessId
+        }).ToList();
+
+        return Ok(employeeDtos);
     }
 
     [HttpPut("{business_id:int}/employees/{employee_id}")]
@@ -158,7 +192,16 @@ public class BusinessController : ControllerBase
         {
             _userRepository.Update(employee);
             await _userRepository.SaveChangesAsync();
-            return Ok(employee); // 200 OK
+            var employeeDto = new UserDto
+            {
+                Id = employee.Id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                AvailabilityStatus = employee.AvailabilityStatus,
+                BusinessId = employee.BusinessId
+            };
+
+            return Ok(employeeDto); 
         }
         catch (Exception)
         {

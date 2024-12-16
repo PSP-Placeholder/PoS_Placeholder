@@ -38,6 +38,11 @@ public class ApplicationDbContext : IdentityDbContext<User>
             .HasOne(o => o.Business)
             .WithMany(b => b.Orders)
             .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<User>()
+            .HasOne(o => o.Business)
+            .WithMany(u => u.Users)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
 

@@ -56,12 +56,6 @@ builder.Services.AddControllers()
     options.JsonSerializerOptions.Converters.Add(new TimeOnlyConverter());
 });
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-    });
-
 
 builder.Services.AddSingleton(u =>
     new BlobServiceClient(builder.Configuration.GetConnectionString("IMG_STORAGE_CONTAINER_CONNECTIONSTRING")));
